@@ -1,51 +1,50 @@
 ;(function() {
     var $ = document.querySelector.bind(document);
-    var monkeysButton;
-    var monkeysText;
-    var monkeysTextInterval;
-    var showingMonkeys = false;
 
-    var toggleMonkeyColor = function() {
-        if (monkeysText.classList.contains("alt-color")) {
-            monkeysText.classList.remove("alt-color");
-            monkeysText.style.color = "#fa430b";
+    var monkeysButtonEl;
+    var monkeysTextEl;
+    var monkeysTextInterval;
+
+    function toggleMonkeysTextColor() {
+        if (monkeysTextEl.classList.contains("alt-color")) {
+            monkeysTextEl.classList.remove("alt-color");
+            monkeysTextEl.style.color = "#fa430b";
         }
         else {
-            monkeysText.classList.add("alt-color");
-            monkeysText.style.color = "#380bfa";
+            monkeysTextEl.classList.add("alt-color");
+            monkeysTextEl.style.color = "#380bfa";
         }
     }
 
-    var monkeysGo = function() {
-        monkeysText.style.display = "block";
-        showingMonkeys = true;
+    function monkeysGo() {
+        monkeysTextEl.style.display = "block";
         monkeysTextInterval = setInterval(function() {
-            toggleMonkeyColor();
+            toggleMonkeysTextColor();
         }, 750);
-        monkeysButton.innerHTML = "Click here to stop the monkeys";
+        monkeysButtonEl.innerHTML = "Click here to stop the monkeys";
+        monkeysButtonEl.removeEventListener("click", monkeysGo, false);
+        monkeysButtonEl.addEventListener("click", monkeysStop, false);
     }
 
-    var monkeysStop = function() {
+    function monkeysStop() {
         clearInterval(monkeysTextInterval);
-        showingMonkeys = false;
-        monkeysText.style.display = "none";
-        monkeysButton.innerHTML = "Click here to reveal monkeys";
+        monkeysTextEl.style.display = "none";
+        monkeysButtonEl.innerHTML = "Click here to reveal monkeys";
+        monkeysButtonEl.removeEventListener("click", monkeysStop, false);
+        monkeysButtonEl.addEventListener("click", monkeysGo, false);
     }
 
-    var init = function() {
+    function movePurposeButton() {
 
-        monkeysButton = $('.monkeys-button');
-        monkeysText = $('.monkeys-text');
-
-        monkeysButton.addEventListener("click", function(event) {
-            if (showingMonkeys) {
-                monkeysStop();
-            } else {
-                monkeysGo();
-            }
-        }, false);
     }
 
-    document.addEventListener('DOMContentLoaded', init, false);
+    document.addEventListener('DOMContentLoaded', function() {
+        purposeButtonContainerEl = $('.monkeys-button-container');
+        monkeysButtonEl = $('.monkeys-button');
+        monkeysTextEl = $('.monkeys-text');
+
+        monkeysButtonEl.addEventListener("click", monkeysGo, false);
+        purposeButtonContainerEl.addEventListener("mouseover", movePurposeButton, false);
+    }, false);
 
 })();
