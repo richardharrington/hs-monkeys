@@ -23,9 +23,6 @@ body, div, a {
     position: absolute;
     width: $button-width + (2 * $button-margin);
     height: $button-height + (2 * $button-margin);
-    // -webkit-transition: left 0.05s;
-    // -moz-transition: left 0.05s;
-    // transition: left 0.05s;
 
     .button {
         position: absolute;
@@ -72,7 +69,31 @@ body, div, a {
     color: #fa430b;
     display: none;
 
-    &.alt-color {
-        color: #380bfa;
-    }
+    animation: 'toggle-color' 1.5s infinite linear;
+    -webkit-animation: 'toggle-color' 1.5s infinite linear;
+    -moz-animation: 'toggle-color' 1.5s infinite linear;
 }
+
+
+@keyframes 'toggle-color' {
+  0%     { color: #fa430b; }
+  49.99% { color: #fa430b; }
+  50%    { color: #380bfa; }
+  100%   { color: #380bfa; }
+}
+
+@-webkit-keyframes 'toggle-color' {
+  0%     { color: #fa430b; }
+  49.99% { color: #fa430b; }
+  50%    { color: #380bfa; }
+  100%   { color: #380bfa; }
+}
+
+@-moz-keyframes 'toggle-color' {
+  0%     { color: #fa430b; }
+  49.99% { color: #fa430b; }
+  50%    { color: #380bfa; }
+  100%   { color: #380bfa; }
+}
+
+
