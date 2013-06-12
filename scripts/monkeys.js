@@ -20,12 +20,17 @@
         }
     }
 
-    function monkeysCleanUp() {
-        monkeysButtonEl.removeEventListener("click");
+    function monkeysGoCleanup() {
+        monkeysButtonEl.removeEventListener("click", monkeysGo, false);
+        clearInterval(monkeysTextInterval);
+    }
+
+    function monkeysStopCleanup() {
+        monkeysButtonEl.removeEventListener("click", monkeysStop, false);
     }
 
     function monkeysGo() {
-        monkeysCleanUp();
+        monkeysStopCleanup();
         monkeysTextEl.style.display = "block";
         monkeysTextInterval = setInterval(function() {
             toggleMonkeysTextColor();
@@ -35,8 +40,7 @@
     }
 
     function monkeysStop() {
-        monkeysCleanUp();
-        clearInterval(monkeysTextInterval);
+        monkeysGoCleanup();
         monkeysTextEl.style.display = "none";
         monkeysButtonEl.innerHTML = "Click here to reveal monkeys";
         monkeysButtonEl.addEventListener("click", monkeysGo, false);
@@ -84,6 +88,12 @@
         return result;
     }
 
+    function resetPurposeButton() {
+        purposeButtonContainerEl.style.left = "0px";
+        purposeButtonContainerEl.style.top = "0px";
+        monkeysGo();
+    }
+
     function movePurposeButton(event) {
         var elBounds = purposeButtonContainerEl.getBoundingClientRect();
         var mousePos = {
@@ -108,6 +118,7 @@
         monkeysTextEl = $('.monkeys-text');
 
         monkeysButtonEl.addEventListener("click", monkeysGo, false);
+        purposeButtonEl.addEventListener("click", resetPurposeButton, false);
         purposeButtonContainerEl.addEventListener("mousemove", movePurposeButton, false);
     }, false);
 
