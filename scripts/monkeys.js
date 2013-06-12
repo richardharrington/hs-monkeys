@@ -1,5 +1,7 @@
 ;(function() {
     var $ = document.querySelector.bind(document);
+    var max = Math.max.bind(Math);
+    var min = Math.min.bind(Math);
 
     var purposeButtonContainerEl;
     var purposeButtonEl;
@@ -51,59 +53,38 @@
         for (var dir in windowBounds) {
             result[dir] = windowBounds[dir] - elBounds[dir];
         }
-        // console.log("getMaxEscapeDistances:");
-        // console.log(result);
         return result;
     }
 
     function getEncroachingVector(elBounds, mousePos) {
-        console.log("elBounds:");
-        console.log(elBounds);
-        console.log("mousePos:");
-        console.log(mousePos);
-
         var center = {
             x: elBounds.left + (elBounds.right - elBounds.left) / 2,
             y: elBounds.top + (elBounds.bottom - elBounds.top) / 2
         };
-        console.log("center:");
-        console.log(center);
         var result = {
             x: mousePos.x < center.x ? 
-                    mousePos.x - elBounds.left :
-                    elBounds.right - mousePos.x,
+                    max(0, mousePos.x - elBounds.left) :
+                    min(0, mousePos.x - elBounds.right),
             y: mousePos.y < center.y ?
-                    mousePos.y - elBounds.top :
-                    elBounds.bottom - mousePos.y
+                    max(0, mousePos.y - elBounds.top) :
+                    min(0, mousePos.y - elBounds.bottom)
         };
-
-        console.log("getEncroachingVector:");
-        console.log(result);
-        console.log("\n");
         return  result;
     }
 
     function getEscapeVector(maxEscapeDistances, encroachingVector) {
         var result = {
             x: encroachingVector.x > 0 ?
-                    Math.min(maxEscapeDistances.right, encroachingVector.x) :
-                    Math.max(maxEscapeDistances.left, encroachingVector.x),
+                    min(maxEscapeDistances.right, encroachingVector.x) :
+                    max(maxEscapeDistances.left, encroachingVector.x),
             y: encroachingVector.y > 0 ?
-                    Math.min(maxEscapeDistances.bottom, encroachingVector.y) :
-                    Math.max(maxEscapeDistances.top, encroachingVector.y)
+                    min(maxEscapeDistances.bottom, encroachingVector.y) :
+                    max(maxEscapeDistances.top, encroachingVector.y)
         };
-        // console.log("getEscapeVector:");
-        // console.log(result);
         return result;
     }
 
     function movePurposeButton(event) {
-        // Make sure we're not crossing the border between the 
-        // purpose button container and its child button.
-        // if (event.relatedTarget === purposeButtonEl || event.target === purposeButtonEl) {
-        //     return;
-        // }
-
         var elBounds = purposeButtonContainerEl.getBoundingClientRect();
         var mousePos = {
             x: event.clientX,
@@ -114,10 +95,10 @@
                                 getEncroachingVector(elBounds, mousePos));
         var oldLeft = parseInt(purposeButtonContainerEl.style.left) || 0;
         var newLeft = (oldLeft + escapeVector.x) + "px";
-        var oldRight = parseInt(purposeButtonContainerEl.style.top) || 0;
-        var newRight = (oldRight + escapeVector.y) + "px";
+        var oldTop = parseInt(purposeButtonContainerEl.style.top) || 0;
+        var newTop = (oldTop + escapeVector.y) + "px";
         purposeButtonContainerEl.style.left = newLeft;
-        purposeButtonContainerEl.style.right = newRight;
+        purposeButtonContainerEl.style.top = newTop;
     }
 
     document.addEventListener('DOMContentLoaded', function() {

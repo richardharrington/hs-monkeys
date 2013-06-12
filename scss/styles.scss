@@ -23,6 +23,9 @@ body, div, a {
     position: absolute;
     width: $button-width + (2 * $button-margin);
     height: $button-height + (2 * $button-margin);
+    // -webkit-transition: left 0.05s;
+    // -moz-transition: left 0.05s;
+    // transition: left 0.05s;
 
     .button {
         position: absolute;
