@@ -1,4 +1,4 @@
-;(function(exports) {
+;(function() {
 
     var $ = document.querySelector.bind(document);
     var max = Math.max.bind(Math);
@@ -101,13 +101,5 @@
 
 
     }, false);
-
-
-setTimeout (function() {
-    exports.monkeysGo = monkeysGo;
-    exports.monkeysStop = monkeysStop;
-    exports.monkeysButtonEl = monkeysButtonEl;
-
-},1000);
 
 }(this));
