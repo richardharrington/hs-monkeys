@@ -1,4 +1,4 @@
 monkeys
 ==========
 
-A project with buttons about monkeys and one's life's purpose.
+A project about buttons, monkeys, and your life's purpose.
