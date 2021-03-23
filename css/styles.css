@@ -1,12 +1,15 @@
-$container-width: 900px;
-$container-height: 300px;
+:root {
+    --container-width: 900px;
+    --container-height: 300px;
+    
+    --button-width: 220px;
+    --button-height: 80px;
+    --button-margin: 40px;
+    
+    --logo-width: 140px;
+    --logo-height: 140px;
+}
 
-$button-width: 220px;
-$button-height: 80px;
-$button-margin: 40px;
-
-$logo-width: 140px;
-$logo-height: 140px;
 
 body, div, a {
     box-sizing: border-box;
@@ -16,41 +19,40 @@ body, div, a {
     position: relative;
     margin-top: 125px;
     margin-left: 150px;
-    width: $container-width;
-    height: $container-height;
+    width: var(--container-width);
+    height: var(--container-height);
 }
 .button-container {
     position: absolute;
-    width: $button-width + (2 * $button-margin);
-    height: $button-height + (2 * $button-margin);
-
-    .button {
-        position: absolute;
-        left: $button-margin;
-        top: $button-margin;
-        text-align: center;
-        padding: 15px 10px 0;
-        font-family: helvetica,"sans serif";
-        font-weight: bold;
-        color: #444;
-        text-shadow: 2px 2px #0bfab9;
-        font-size: 20px;
-        width: $button-width;
-        height: $button-height;
-        background-color: #2be5b3;
-        border-radius: 7px;
-        border-color: #888;
-        border-style: inset;
-        cursor: pointer;
-    }
+    width: calc(var(--button-width) + (2 * var(--button-margin)));
+    height: calc(var(--button-height) + (2 * var(--button-margin)));
+}
+.button-container .button {
+    position: absolute;
+    left: var(--button-margin);
+    top: var(--button-margin);
+    text-align: center;
+    padding: 15px 10px 0;
+    font-family: helvetica,"sans serif";
+    font-weight: bold;
+    color: #444;
+    text-shadow: 2px 2px #0bfab9;
+    font-size: 20px;
+    width: var(--button-width);
+    height: var(--button-height);
+    background-color: #2be5b3;
+    border-radius: 7px;
+    border-color: #888;
+    border-style: inset;
+    cursor: pointer;
 }
 .logo {
     position: absolute;
-    left: ($container-width / 2) - ($logo-width / 2);
+    left: calc((var(--container-width) / 2) - (var(--logo-width) / 2));
     top: 12px;
     background-image: url('../images/logo.png');
-    width: $logo-width;
-    height: $logo-height;
+    width: var(--logo-width);
+    height: var(--logo-height);
 }
 .monkeys-button-container {
     right: 0;
