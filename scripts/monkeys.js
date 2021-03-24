@@ -45,7 +45,7 @@
                 y: elBounds.top + (elBounds.bottom - elBounds.top) / 2
             };
             var result = {
-                x: mousePos.x < center.x ? 
+                x: mousePos.x < center.x ?
                         max(0, mousePos.x - elBounds.left) :
                         min(0, mousePos.x - elBounds.right),
                 y: mousePos.y < center.y ?
