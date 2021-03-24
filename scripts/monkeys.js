@@ -55,16 +55,28 @@
             return  result;
         }
 
-        function getEscapeVector(maxEscapeDistances, encroachingVector) {
-            var result = {
+        function getEscapeVector(elBounds, maxEscapeDistances, encroachingVector) {
+            // If the person is close to the center of the button for
+            // a given vector component (either because they moved the
+            // mouse really fast or because they approached from one
+            // side, and the other direction's vector component is close
+            // to the center) then go fast, otherwise slow.
+
+            const elWidth = elBounds.right - elBounds.left;
+            const elHeight = elBounds.bottom - elBounds.top;
+
+            const PRESSURE_COEFFICIENT = 50;
+
+            const xPressure = PRESSURE_COEFFICIENT * encroachingVector.x / (elWidth - Math.abs(encroachingVector.x));
+            const yPressure = PRESSURE_COEFFICIENT * encroachingVector.y / (elHeight - Math.abs(encroachingVector.y));
+            return {
                 x: encroachingVector.x > 0 ?
-                        min(maxEscapeDistances.right, encroachingVector.x) :
-                        max(maxEscapeDistances.left, encroachingVector.x),
+                        min(maxEscapeDistances.right, xPressure) :
+                        max(maxEscapeDistances.left, xPressure),
                 y: encroachingVector.y > 0 ?
-                        min(maxEscapeDistances.bottom, encroachingVector.y) :
-                        max(maxEscapeDistances.top, encroachingVector.y)
+                        min(maxEscapeDistances.bottom, yPressure) :
+                        max(maxEscapeDistances.top, yPressure)
             };
-            return result;
         }
 
         var elBounds = purposeButtonContainerEl.getBoundingClientRect();
@@ -73,7 +85,8 @@
             y: event.clientY
         };
         var escapeVector = getEscapeVector(
-                                getMaxEscapeDistances(elBounds), 
+                                elBounds,
+                                getMaxEscapeDistances(elBounds),
                                 getEncroachingVector(elBounds, mousePos));
         var oldLeft = parseInt(purposeButtonContainerEl.style.left) || 0;
         var newLeft = (oldLeft + escapeVector.x) + "px";
