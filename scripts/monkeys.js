@@ -9,6 +9,12 @@
     var monkeysButtonEl;
     var monkeysTextEl;
 
+    const PRECISION = 1;
+
+    function closeToZero(target) {
+        return Math.abs(target) <= PRECISION;
+    }
+
     function monkeysGo() {
         monkeysButtonEl.removeEventListener("click", monkeysGo, false);
         monkeysTextEl.style.display = "block";
@@ -62,8 +68,57 @@
             // side, and the other direction's vector component is close
             // to the center) then go fast, otherwise slow.
 
+            console.log({ maxEscapeDistances})
+
             const elWidth = elBounds.right - elBounds.left;
             const elHeight = elBounds.bottom - elBounds.top;
+
+            const maxXMove = window.innerWidth - elWidth;
+            const maxYMove = window.innerHeight - elHeight;
+
+            const pushingLeft = encroachingVector.x < 0;
+            const pushingRight = encroachingVector.x > 0;
+            const pushingUp = encroachingVector.y < 0;
+            const pushingDown = encroachingVector.y > 0;
+
+            const upperLeft = closeToZero(maxEscapeDistances.top) && closeToZero(maxEscapeDistances.left);
+            if (upperLeft && pushingUp && pushingLeft) {
+                return {
+                    x: maxXMove,
+                    y: maxYMove,
+                    suppressMouseMoveListener: true,
+                };
+            }
+            const upperRight = closeToZero(maxEscapeDistances.top) && closeToZero(maxEscapeDistances.right);
+            if (upperRight && pushingUp && pushingRight) {
+                return {
+                    x: -maxXMove,
+                    y: maxYMove,
+                    suppressMouseMoveListener: true,
+                };
+            }
+            const lowerRight = closeToZero(maxEscapeDistances.bottom) && closeToZero(maxEscapeDistances.right);
+            if (lowerRight && pushingDown && pushingRight) {
+                console.log({x:0, y:0, suppressMouseMoveListener: true})
+                return {
+                    x: -maxXMove,
+                    y: -maxYMove,
+                    suppressMouseMoveListener: true,
+                };
+            }
+            const lowerLeft = closeToZero(maxEscapeDistances.bottom) && closeToZero(maxEscapeDistances.left);
+            if (lowerLeft && pushingDown && pushingLeft) {
+                return {
+                    x: maxXMove,
+                    y: -maxYMove,
+                    suppressMouseMoveListener: true,
+                };
+            }
+
+
+
+            // TODO: maybe transition away from the corners (maybe turn off the mouseove
+            // event listener entirely until it gets to the other side).
 
             const PRESSURE_COEFFICIENT = 50;
 
