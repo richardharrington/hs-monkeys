@@ -114,11 +114,6 @@ function movePurposeButton(event) {
             };
         }
 
-
-
-        // TODO: maybe transition away from the corners (maybe turn off the mouseove
-        // event listener entirely until it gets to the other side).
-
         const PRESSURE_COEFFICIENT = 50;
 
         const xPressure = PRESSURE_COEFFICIENT * encroachingVector.x / (elWidth - Math.abs(encroachingVector.x));
