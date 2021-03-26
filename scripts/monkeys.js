@@ -1,11 +1,11 @@
 ;(function() {
 
-    var $ = document.querySelector.bind(document);
+    const $ = document.querySelector.bind(document);
 
-    var purposeButtonContainerEl;
-    var purposeButtonEl;
-    var monkeysButtonEl;
-    var monkeysTextEl;
+    let purposeButtonContainerEl;
+    let purposeButtonEl;
+    let monkeysButtonEl;
+    let monkeysTextEl;
 
     const PRECISION = 1;
 
@@ -36,19 +36,19 @@
                 bottom: window.innerHeight,
                 right:  window.innerWidth
             };
-            var result = {};
-            for (var dir in windowBounds) {
+            const result = {};
+            for (const dir in windowBounds) {
                 result[dir] = windowBounds[dir] - elBounds[dir];
             }
             return result;
         }
 
         function getEncroachingVector(elBounds, mousePos) {
-            var center = {
+            const center = {
                 x: elBounds.left + (elBounds.right - elBounds.left) / 2,
                 y: elBounds.top + (elBounds.bottom - elBounds.top) / 2
             };
-            var result = {
+            return {
                 x: mousePos.x < center.x ?
                         Math.max(0, mousePos.x - elBounds.left) :
                         Math.min(0, mousePos.x - elBounds.right),
@@ -56,7 +56,6 @@
                         Math.max(0, mousePos.y - elBounds.top) :
                         Math.min(0, mousePos.y - elBounds.bottom)
             };
-            return  result;
         }
 
         function getEscapeVector(elBounds, maxEscapeDistances, encroachingVector) {
@@ -132,19 +131,19 @@
             };
         }
 
-        var elBounds = purposeButtonContainerEl.getBoundingClientRect();
-        var mousePos = {
+        const elBounds = purposeButtonContainerEl.getBoundingClientRect();
+        const mousePos = {
             x: event.clientX,
             y: event.clientY
         };
-        var escapeVector = getEscapeVector(
+        const escapeVector = getEscapeVector(
                                 elBounds,
                                 getMaxEscapeDistances(elBounds),
                                 getEncroachingVector(elBounds, mousePos));
-        var oldLeft = parseInt(purposeButtonContainerEl.style.left) || 0;
-        var newLeft = (oldLeft + escapeVector.x) + "px";
-        var oldTop = parseInt(purposeButtonContainerEl.style.top) || 0;
-        var newTop = (oldTop + escapeVector.y) + "px";
+        const oldLeft = parseInt(purposeButtonContainerEl.style.left) || 0;
+        const newLeft = (oldLeft + escapeVector.x) + "px";
+        const oldTop = parseInt(purposeButtonContainerEl.style.top) || 0;
+        const newTop = (oldTop + escapeVector.y) + "px";
         purposeButtonContainerEl.style.left = newLeft;
         purposeButtonContainerEl.style.top = newTop;
     }
@@ -164,8 +163,5 @@
         monkeysButtonEl.addEventListener("click", monkeysGo, false);
         purposeButtonEl.addEventListener("click", resetPurposeButton, false);
         purposeButtonContainerEl.addEventListener("mousemove", movePurposeButton, false);
-
-
     }, false);
-
 }(this));
