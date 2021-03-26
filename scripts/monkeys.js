@@ -50,11 +50,11 @@
             };
             return {
                 x: mousePos.x < center.x ?
-                        Math.max(0, mousePos.x - elBounds.left) :
-                        Math.min(0, mousePos.x - elBounds.right),
+                    Math.max(0, mousePos.x - elBounds.left) :
+                    Math.min(0, mousePos.x - elBounds.right),
                 y: mousePos.y < center.y ?
-                        Math.max(0, mousePos.y - elBounds.top) :
-                        Math.min(0, mousePos.y - elBounds.bottom)
+                    Math.max(0, mousePos.y - elBounds.top) :
+                    Math.min(0, mousePos.y - elBounds.bottom)
             };
         }
 
@@ -123,11 +123,11 @@
             const yPressure = PRESSURE_COEFFICIENT * encroachingVector.y / (elHeight - Math.abs(encroachingVector.y));
             return {
                 x: encroachingVector.x > 0 ?
-                        Math.min(maxEscapeDistances.right, xPressure) :
-                        Math.max(maxEscapeDistances.left, xPressure),
+                    Math.min(maxEscapeDistances.right, xPressure) :
+                    Math.max(maxEscapeDistances.left, xPressure),
                 y: encroachingVector.y > 0 ?
-                        Math.min(maxEscapeDistances.bottom, yPressure) :
-                        Math.max(maxEscapeDistances.top, yPressure)
+                    Math.min(maxEscapeDistances.bottom, yPressure) :
+                    Math.max(maxEscapeDistances.top, yPressure)
             };
         }
 
@@ -137,9 +137,10 @@
             y: event.clientY
         };
         const escapeVector = getEscapeVector(
-                                elBounds,
-                                getMaxEscapeDistances(elBounds),
-                                getEncroachingVector(elBounds, mousePos));
+            elBounds,
+            getMaxEscapeDistances(elBounds),
+            getEncroachingVector(elBounds, mousePos)
+        );
         const oldLeft = parseInt(purposeButtonContainerEl.style.left) || 0;
         const newLeft = (oldLeft + escapeVector.x) + "px";
         const oldTop = parseInt(purposeButtonContainerEl.style.top) || 0;
