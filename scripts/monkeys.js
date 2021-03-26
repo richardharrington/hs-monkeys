@@ -1,8 +1,6 @@
 ;(function() {
 
     var $ = document.querySelector.bind(document);
-    var max = Math.max.bind(Math);
-    var min = Math.min.bind(Math);
 
     var purposeButtonContainerEl;
     var purposeButtonEl;
@@ -52,11 +50,11 @@
             };
             var result = {
                 x: mousePos.x < center.x ?
-                        max(0, mousePos.x - elBounds.left) :
-                        min(0, mousePos.x - elBounds.right),
+                        Math.max(0, mousePos.x - elBounds.left) :
+                        Math.min(0, mousePos.x - elBounds.right),
                 y: mousePos.y < center.y ?
-                        max(0, mousePos.y - elBounds.top) :
-                        min(0, mousePos.y - elBounds.bottom)
+                        Math.max(0, mousePos.y - elBounds.top) :
+                        Math.min(0, mousePos.y - elBounds.bottom)
             };
             return  result;
         }
@@ -126,11 +124,11 @@
             const yPressure = PRESSURE_COEFFICIENT * encroachingVector.y / (elHeight - Math.abs(encroachingVector.y));
             return {
                 x: encroachingVector.x > 0 ?
-                        min(maxEscapeDistances.right, xPressure) :
-                        max(maxEscapeDistances.left, xPressure),
+                        Math.min(maxEscapeDistances.right, xPressure) :
+                        Math.max(maxEscapeDistances.left, xPressure),
                 y: encroachingVector.y > 0 ?
-                        min(maxEscapeDistances.bottom, yPressure) :
-                        max(maxEscapeDistances.top, yPressure)
+                        Math.min(maxEscapeDistances.bottom, yPressure) :
+                        Math.max(maxEscapeDistances.top, yPressure)
             };
         }
 
